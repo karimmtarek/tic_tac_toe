@@ -25,6 +25,77 @@ module TicTacToe
       end
     end
 
+    def get_input(cells, log, players)
+      if players[:human] == current_player(log)
+        human_input(cells, log, players)
+      else
+        computer_input(cells, log, players)
+      end
+
+      if game_over?(cells)
+        render_board(cells, players)
+        render_final_status(cells, log, players)
+      end
+    end
+
+    def render_final_status(cells, log, players)
+      if win?(cells)
+        puts "\n* #{print_player(log, players)} Wins *"
+      else
+        puts "\n* It's a draw *"
+      end
+    end
+
+    def human_input(cells, log, players)
+      puts "\nWhat is your move?(type 'exit' to end the game)"
+      cell = gets.chomp.downcase
+
+      exit if cell == 'exit'
+
+      if valid_cell?(cell) && empty_cell?(cells, cell)
+        cells[:"#{cell}"] = current_player(log)
+        log << "#{current_player(log)} > #{cell}"
+      else
+        puts "Invalid entry please try again\n"
+      end
+    end
+
+    def computer_input(cells, log, players)
+      ary = available_cells(cells)
+      flag = ary.length
+
+      # looking for a win move
+      ary.each do |cell|
+        cells[cell] = current_player(log)
+        if win?(cells)
+          render_board(cells, players)
+          puts "\n* Computer Wins *"
+          exit
+        else
+          cells[cell] = ''
+        end
+      end
+
+      # block human win
+      ary.each do |cell|
+        cells[cell] = switch_player(log)
+        if win?(cells)
+          cells[cell] = current_player(log)
+          log << "#{current_player(log)} > #{cell}"
+          break
+        else
+          cells[cell] = ''
+        end
+      end
+
+      # assign to a random cell
+      if flag == available_cells(cells).length
+        cell = ary[rand(0..ary.length-1)]
+        cells[cell] = current_player(log)
+        log << "#{current_player(log)} > #{cell}"
+      end
+    end
+
     def print_players(players)
       unless players[:human].empty?
         if players[:human] == 'X'
@@ -133,69 +204,6 @@ module TicTacToe
 
     def empty_cell?(cells, cell)
       cells[:"#{cell}"].empty?
-    end
-
-    def computer_input(cells, log, players)
-      ary = available_cells(cells)
-      flag = ary.length
-
-      # looking for a win move
-      ary.each do |cell|
-        cells[cell] = current_player(log)
-        if win?(cells)
-          render_board(cells, players)
-          puts "\n* Computer Wins *"
-          exit
-        else
-          cells[cell] = ''
-        end
-      end
-
-      # block human win
-      ary.each do |cell|
-        cells[cell] = switch_player(log)
-        if win?(cells)
-          cells[cell] = current_player(log)
-          log << "#{current_player(log)} > #{cell}"
-          break
-        else
-          cells[cell] = ''
-        end
-      end
-
-      # assign to a random cell
-      if flag == available_cells(cells).length
-        cell = ary[rand(0..ary.length-1)]
-        cells[cell] = current_player(log)
-        log << "#{current_player(log)} > #{cell}"
-      end
-    end
-
-    def get_input(cells, log, players)
-      if players[:human] == current_player(log)
-        puts "\nWhat is your move?(type 'exit' to end the game)"
-        cell = gets.chomp.downcase
-
-        exit if cell == 'exit'
-
-        if valid_cell?(cell) && empty_cell?(cells, cell)
-          cells[:"#{cell}"] = current_player(log)
-          log << "#{current_player(log)} > #{cell}"
-        else
-          puts "Invalid entry please try again\n"
-        end
-      else
-        computer_input(cells, log, players)
-      end
-
-      if game_over?(cells)
-        render_board(cells, players)
-        if win?(cells)
-          puts "\n* #{print_player(log, players)} Wins *"
-        else
-          puts "\n* It's a draw *"
-        end
-      end
     end
   end
 end
