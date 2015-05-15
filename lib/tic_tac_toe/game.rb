@@ -43,6 +43,19 @@ module TicTacToe
       end
     end
 
+    def current_player(log)
+      return 'X' if log.empty?
+      if log.last[0] == 'X'
+        'O'
+      else
+        'X'
+      end
+    end
+
+    def switch_player(log)
+      current_player(log) == 'X' ? 'O' : 'X'
+    end
+
     def win?(cells)
       # Rows
       unless cells[:a1].empty? && cells[:a2].empty? && cells[:a3].empty?
@@ -105,10 +118,6 @@ module TicTacToe
       cells[:"#{cell}"]
     end
 
-    def xo
-      rand > 0.5 ? 'X' : 'O'
-    end
-
     def available_cells(cells)
       new_hash = cells.select { |_k, v| v == '' }
       new_hash.keys
@@ -125,24 +134,6 @@ module TicTacToe
     def empty_cell?(cells, cell)
       cells[:"#{cell}"].empty?
     end
-
-    def next_move
-
-    end
-
-    def current_player(log)
-      return 'X' if log.empty?
-      if log.last[0] == 'X'
-        'O'
-      else
-        'X'
-      end
-    end
-
-    def switch_player(log)
-      current_player(log) == 'X' ? 'O' : 'X'
-    end
-
 
     def computer_input(cells, log, players)
       ary = available_cells(cells)
