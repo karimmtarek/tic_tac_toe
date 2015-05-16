@@ -129,43 +129,31 @@ module TicTacToe
 
     def win?(cells)
       # Rows
-      unless cells[:a1].empty? && cells[:a2].empty? && cells[:a3].empty?
-        return true if cells[:a1] == cells[:a2] && cells[:a2] == cells[:a3]
-      end
+      return true if equal?(cells, :a1, :a2, :a3)
 
-      unless cells[:b1].empty? && cells[:b2].empty? && cells[:b3].empty?
-        return true if cells[:b1] == cells[:b2] && cells[:b2] == cells[:b3]
-      end
+      return true if equal?(cells, :b1, :b2, :b3)
 
-      unless cells[:c1].empty? && cells[:c2].empty? && cells[:c3].empty?
-        return true if cells[:c1] == cells[:c2] && cells[:c2] == cells[:c3]
-      end
+      return true if equal?(cells, :c1, :c2, :c3)
 
       # Columns
-      unless cells[:a1].empty? && cells[:b1].empty? && cells[:c1].empty?
-        return true if cells[:a1] == cells[:b1] && cells[:b1] == cells[:c1]
-      end
+      return true if equal?(cells, :a1, :b1, :c1)
 
-      unless cells[:a2].empty? && cells[:b2].empty? && cells[:c2].empty?
-        return true if cells[:a2] == cells[:b2] && cells[:b2] == cells[:c2]
-      end
+      return true if equal?(cells, :a2, :b2, :c2)
 
-      unless cells[:a3].empty? && cells[:b3].empty? && cells[:c3].empty?
-        return true if cells[:a3] == cells[:b3] && cells[:b3] == cells[:c3]
-      end
+      return true if equal?(cells, :a3, :b3, :c3)
 
       # Diagonals
-      unless cells[:a1].empty? && cells[:b2].empty? && cells[:c3].empty?
-        return true if cells[:a1] == cells[:b2] && cells[:b2] == cells[:c3]
-      end
+      return true if equal?(cells, :a1, :b2, :c3)
 
-      unless cells[:a3].empty? && cells[:b2].empty? && cells[:c1].empty?
-        return true if cells[:a3] == cells[:b2] && cells[:b2] == cells[:c1]
-      end
+      return true if equal?(cells, :a3, :b2, :c1)
+    end
+
+    def equal?(cells, cell1, cell2, cell3)
+      !cells[cell1].empty? && cells[cell1] == cells[cell2] && cells[cell2] == cells[cell3]
     end
 
     def draw?(cells)
-      true unless cells.has_value? ''
+      true unless cells.value? ''
     end
 
     def game_over?(cells)
