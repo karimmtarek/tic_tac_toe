@@ -2,34 +2,34 @@ module TicTacToe
   class Game
     attr_reader :board_cells, :moves_log, :players
     def initialize
-      @board_cells = {a1: '', a2: '', a3: '', b1: '', b2: '', b3: '', c1: '', c2: '', c3: ''}
+      @board_cells = { a1: '', a2: '', a3: '', b1: '', b2: '', b3: '', c1: '', c2: '', c3: '' }
       @moves_log = []
-      @players = {human: '', computer:''}
+      @players = { human: '', computer: '' }
     end
 
     def run
       player_setup(players)
       until game_over?(board_cells)
         render_board(board_cells, players)
-        get_input(board_cells, moves_log, players)
+        make_move(board_cells, moves_log, players)
       end
     end
 
     def player_setup(players)
       if rand > 0.5
-        players[:human]= 'X'
+        players[:human] = 'X'
         players[:computer] = 'O'
       else
         players[:computer] = 'X'
-        players[:human]= 'O'
+        players[:human] = 'O'
       end
     end
 
-    def get_input(cells, log, players)
+    def make_move(cells, log, players)
       if players[:human] == current_player(log)
-        human_input(cells, log, players)
+        human_move(cells, log)
       else
-        computer_input(cells, log, players)
+        computer_move(cells, log, players)
       end
 
       if game_over?(cells)
@@ -46,7 +46,7 @@ module TicTacToe
       end
     end
 
-    def human_input(cells, log, players)
+    def human_move(cells, log)
       puts "\nWhat is your move?(type 'exit' to end the game)"
       cell = gets.chomp.downcase
 
@@ -60,7 +60,7 @@ module TicTacToe
       end
     end
 
-    def computer_input(cells, log, players)
+    def computer_move(cells, log, players)
       ary = available_cells(cells)
       flag = ary.length
 
@@ -129,26 +129,26 @@ module TicTacToe
 
     def win?(cells)
       # Rows
-      return true if equal?(cells, :a1, :a2, :a3)
+      return true if cells_equality_check?(cells, :a1, :a2, :a3)
 
-      return true if equal?(cells, :b1, :b2, :b3)
+      return true if cells_equality_check?(cells, :b1, :b2, :b3)
 
-      return true if equal?(cells, :c1, :c2, :c3)
+      return true if cells_equality_check?(cells, :c1, :c2, :c3)
 
       # Columns
-      return true if equal?(cells, :a1, :b1, :c1)
+      return true if cells_equality_check?(cells, :a1, :b1, :c1)
 
-      return true if equal?(cells, :a2, :b2, :c2)
+      return true if cells_equality_check?(cells, :a2, :b2, :c2)
 
-      return true if equal?(cells, :a3, :b3, :c3)
+      return true if cells_equality_check?(cells, :a3, :b3, :c3)
 
       # Diagonals
-      return true if equal?(cells, :a1, :b2, :c3)
+      return true if cells_equality_check?(cells, :a1, :b2, :c3)
 
-      return true if equal?(cells, :a3, :b2, :c1)
+      return true if cells_equality_check?(cells, :a3, :b2, :c1)
     end
 
-    def equal?(cells, cell1, cell2, cell3)
+    def cells_equality_check?(cells, cell1, cell2, cell3)
       !cells[cell1].empty? && cells[cell1] == cells[cell2] && cells[cell2] == cells[cell3]
     end
 
@@ -178,8 +178,7 @@ module TicTacToe
     end
 
     def available_cells(cells)
-      new_hash = cells.select { |_k, v| v == '' }
-      new_hash.keys
+      cells.select { |_k, v| v == '' }.keys
     end
 
     def valid_cells
