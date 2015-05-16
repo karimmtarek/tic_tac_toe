@@ -1,26 +1,17 @@
 # TicTacToe
 
-TODO: Write a gem description
+Human vs. AI Tic Tac Toe Game.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+- Clone this repo
+- Change directory to repo root directory
+- Run `$ bundle` to install missing dependencies
+- Run `$ rake install` to install the gem
 
-```ruby
-gem 'tic_tac_toe'
-```
+## Start the game
 
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install tic_tac_toe
-
-## Usage
-
-TODO: Write usage instructions here
+In your terminal type `tictactoe`
 
 ## Contributing
 

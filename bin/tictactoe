@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+
+require 'tic_tac_toe'
+TicTacToe.run
