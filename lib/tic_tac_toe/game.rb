@@ -62,9 +62,17 @@ module TicTacToe
 
     def computer_move(cells, log, players)
       ary = available_cells(cells)
-      flag = ary.length
+      # flag = ary.length
+      flag = log.length
 
-      # looking for a win move
+      win_move(cells, ary, log, players)
+      win_block(cells, ary, log)
+
+      filler_move(cells, ary, log) if flag == log.length
+    end
+
+    # looking for a win move
+    def win_move(cells, ary, log, players)
       ary.each do |cell|
         cells[cell] = current_player(log)
         if win?(cells)
@@ -75,8 +83,10 @@ module TicTacToe
           cells[cell] = ''
         end
       end
+    end
 
-      # block human win
+    # block human win
+    def win_block(cells, ary, log)
       ary.each do |cell|
         cells[cell] = switch_player(log)
         if win?(cells)
@@ -87,26 +97,94 @@ module TicTacToe
           cells[cell] = ''
         end
       end
+    end
 
-      # assign to a random cell
-      if flag == available_cells(cells).length
-        cell = ary[rand(0..ary.length-1)]
-        cells[cell] = current_player(log)
-        log << "#{current_player(log)} > #{cell}"
+    # assign to a cell that has a sibling or a random cell
+    def filler_move(cells, ary, log)
+      flag = log.length
+
+      ary.each do |cell|
+        if corner?(cell)
+          corner_move(cells, cell, log)
+          break
+        end
+
+        if middle?(cell)
+          middle_move(cells, cell, log)
+          break
+        end
+
+        if diagonal?(cell)
+          diagonal_move(cells, cell, log)
+          break
+        end
       end
+
+      make_filler_move(cells, ary[rand(0..ary.length - 1)], log) if flag == log.length
+    end
+
+    def make_filler_move(cells, cell, log)
+      cells[cell] = current_player(log)
+      log << "#{current_player(log)} > #{cell}"
+    end
+
+    def corner?(cell)
+      [:a1, :a3, :c1, :c3].include? cell
+    end
+
+    def middle?(cell)
+      [:a2, :b1, :b3, :c2].include? cell
+    end
+
+    def diagonal?(cell)
+      cell == :b2
+    end
+
+    def sibling?(cells, siblings_array, log)
+      siblings_array.any? { |cell| cells[cell] == current_player(log) }
+    end
+
+    def corner_move(cells, cell, log)
+      case cell
+      when :a1
+        make_filler_move(cells, cell, log) if sibling?(cells, [:a2, :b1, :b2], log)
+      when :a3
+        make_filler_move(cells, cell, log) if sibling?(cells, [:a2, :b3, :b2], log)
+      when :c1
+        make_filler_move(cells, cell, log) if sibling?(cells, [:c2, :b1, :b2], log)
+      when :c3
+        make_filler_move(cells, cell, log) if sibling?(cells, [:c2, :b3, :b2], log)
+      end
+    end
+
+    def middle_move(cells, cell, log)
+      case cell
+      when :a2
+        make_filler_move(cells, cell, log) if sibling?(cells, [:a1, :a3, :b2], log)
+      when :b1
+        make_filler_move(cells, cell, log) if sibling?(cells, [:a1, :b2, :c1], log)
+      when :b3
+        make_filler_move(cells, cell, log) if sibling?(cells, [:a3, :b2, :c3], log)
+      when :c2
+        make_filler_move(cells, cell, log) if sibling?(cells, [:b2, :c1, :c3], log)
+      end
+    end
+
+    def diagonal_move(cells, cell, log)
+      make_filler_move(cells, cell, log) if sibling?(cells, [:a1, :a2, :a3, :b1, :b3, :c1, :c2, :c3], log)
     end
 
     def print_players(players)
-      unless players[:human].empty?
-        if players[:human] == 'X'
-          "Human(#{players[:human]}) vs. Computer(#{players[:computer]})"
-        else
-          "Computer(#{players[:computer]}) vs. Human(#{players[:human]})"
-        end
+      return if players[:human].empty?
+
+      if players[:human] == 'X'
+        "Human(#{players[:human]}) vs. Computer(#{players[:computer]})"
+      else
+        "Computer(#{players[:computer]}) vs. Human(#{players[:human]})"
       end
     end
 
-    def print_player(log ,players)
+    def print_player(log, players)
       if players[:human] == log.last[0]
         'Human'
       else
