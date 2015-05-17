@@ -212,5 +212,21 @@ module TicTacToe
         expect(board_cells[:a3]).to eq('X')
       end
     end
+
+    context 'players' do
+      it 'pick who is starting first' do
+        game = Game.new
+        players = { human: '', computer: '' }
+        game.player_setup(players)
+        expect(players[:human]).not_to eq('')
+      end
+
+      it 'gets current player' do
+        game = Game.new
+        log = ['O']
+
+        expect(game.current_player(log)).to eq('X')
+      end
+    end
   end
 end
