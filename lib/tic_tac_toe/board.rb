@@ -43,5 +43,42 @@ module TicTacToe
     def empty_cell?(cell)
       cells[:"#{cell}"].empty?
     end
+
+    def win?
+      row_win? || column_win? || diagonal_win?
+    end
+
+    def row_win?
+      return true if cells_equality_check?([:a1, :a2, :a3])
+      return true if cells_equality_check?([:b1, :b2, :b3])
+      return true if cells_equality_check?([:c1, :c2, :c3])
+    end
+
+    def column_win?
+      return true if cells_equality_check?([:a1, :b1, :c1])
+      return true if cells_equality_check?([:a2, :b2, :c2])
+      return true if cells_equality_check?([:a3, :b3, :c3])
+    end
+
+    def diagonal_win?
+      return true if cells_equality_check?([:a3, :b2, :c1])
+      return true if cells_equality_check?([:a1, :b2, :c3])
+    end
+
+    def cells_equality_check?(cells_array)
+      !cells[cells_array[0]].empty? && all_equal?(cells_array)
+    end
+
+    def all_equal?(cells_array)
+      cells_array.all? { |cell| cells[cell] == cells[cells_array.first] }
+    end
+
+    def draw?
+      true unless cells.value?('') || win?
+    end
+
+    def game_over?
+      win? || draw?
+    end
   end
 end
