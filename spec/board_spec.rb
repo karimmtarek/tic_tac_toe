@@ -54,5 +54,96 @@ module TicTacToe
         expect(board.empty_cell?(:a3)).to be_falsey
       end
     end
+
+    context '#game_over?' do
+      it 'returns false if the game is not over' do
+        board = Board.new
+
+        expect(board.game_over?).to be_falsey
+      end
+
+      it 'returns true if the game is over(win)' do
+        board = Board.new
+        board.cells[:a3] = 'X'
+        board.cells[:a2] = 'X'
+        board.cells[:a1] = 'X'
+
+        expect(board.game_over?).to be_truthy
+      end
+
+      it 'returns true if the game is over(draw)' do
+        board = Board.new
+        board.cells[:a1] = 'X'
+        board.cells[:a2] = 'X'
+        board.cells[:a3] = 'O'
+        board.cells[:b1] = 'O'
+        board.cells[:b2] = 'O'
+        board.cells[:b3] = 'X'
+        board.cells[:c1] = 'X'
+        board.cells[:c2] = 'X'
+        board.cells[:c3] = 'O'
+
+        expect(board.game_over?).to be_truthy
+      end
+    end
+
+    context '#cells_equality_check?' do
+      it 'returns true if three cells equal each other' do
+        board = Board.new
+        board.cells[:a1] = 'X'
+        board.cells[:a2] = 'X'
+        board.cells[:a3] = 'X'
+
+        expect(board.cells_equality_check?([:a1, :a2, :a3])).to be_truthy
+      end
+
+      it 'returns false if three cells not equal each other' do
+        board = Board.new
+        board.cells[:a1] = 'X'
+        board.cells[:a2] = 'X'
+        board.cells[:a3] = 'O'
+
+        expect(board.cells_equality_check?([:a1, :a2, :a3])).to be_falsey
+      end
+    end
+
+    context '#win?' do
+      it 'returns true if there is a win' do
+        board = Board.new
+        board.cells[:a1] = 'X'
+        board.cells[:a2] = 'X'
+        board.cells[:a3] = 'X'
+
+        expect(board.win?).to be_truthy
+      end
+
+      it 'returns false if there is no win' do
+        board = Board.new
+
+        expect(board.win?).to be_falsey
+      end
+    end
+
+    context '#draw?' do
+      it 'returns true if there is a draw' do
+        board = Board.new
+        board.cells[:a1] = 'X'
+        board.cells[:a2] = 'X'
+        board.cells[:a3] = 'O'
+        board.cells[:b1] = 'O'
+        board.cells[:b2] = 'O'
+        board.cells[:b3] = 'X'
+        board.cells[:c1] = 'X'
+        board.cells[:c2] = 'X'
+        board.cells[:c3] = 'O'
+
+        expect(board.draw?).to be_truthy
+      end
+
+      it 'returns false if there is no draw' do
+        board = Board.new
+        expect(board.draw?).to be_falsey
+      end
+    end
   end
 end
