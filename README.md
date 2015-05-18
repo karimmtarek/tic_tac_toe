@@ -5,8 +5,7 @@ Human vs. AI Tic Tac Toe Game.
 ## Run without installation
 - Clone this repo
 - Change directory to repo root directory
-- Run `ruby -Ilib -e "require 'tic_tac_toe'; TicTacToe.run"`
-
+- Run `$ ruby -Ilib -e "require 'tic_tac_toe'; TicTacToe.run"`
 
 ## Installation (as a gem)
 
@@ -18,6 +17,9 @@ Human vs. AI Tic Tac Toe Game.
 ## Start the game
 
 In your terminal type `tictactoe`
+
+## Run specs
+- In the root directory run `$ rspec spec`
 
 ## Contributing
 
