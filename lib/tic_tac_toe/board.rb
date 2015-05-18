@@ -44,6 +44,18 @@ module TicTacToe
       cells[:"#{cell}"].empty?
     end
 
+    def corner?(cell)
+      [:a1, :a3, :c1, :c3].include? cell
+    end
+
+    def middle?(cell)
+      [:a2, :b1, :b3, :c2].include? cell
+    end
+
+    def diagonal?(cell)
+      cell == :b2
+    end
+
     def win?
       row_win? || column_win? || diagonal_win?
     end
