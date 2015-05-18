@@ -44,6 +44,10 @@ module TicTacToe
       cells[:"#{cell}"].empty?
     end
 
+    def valid_full_cell?(cell)
+      valid_cell?(cell) && empty_cell?(cell)
+    end
+
     def corner?(cell)
       [:a1, :a3, :c1, :c3].include? cell
     end
