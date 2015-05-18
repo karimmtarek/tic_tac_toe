@@ -55,6 +55,32 @@ module TicTacToe
       end
     end
 
+    context 'cell position' do
+      it 'returns true if the cell position is in the corner' do
+        board = Board.new
+
+        expect(board.corner?(:a1)).to be_truthy
+        expect(board.corner?(:a3)).to be_truthy
+        expect(board.corner?(:c1)).to be_truthy
+        expect(board.corner?(:c3)).to be_truthy
+      end
+
+      it 'returns true if the cell position is in the middle' do
+        board = Board.new
+
+        expect(board.middle?(:a2)).to be_truthy
+        expect(board.middle?(:b1)).to be_truthy
+        expect(board.middle?(:b3)).to be_truthy
+        expect(board.middle?(:c2)).to be_truthy
+      end
+
+      it 'returns true if the cell position is in the middle' do
+        board = Board.new
+
+        expect(board.diagonal?(:b2)).to be_truthy
+      end
+    end
+
     context '#game_over?' do
       it 'returns false if the game is not over' do
         board = Board.new
