@@ -65,23 +65,18 @@ module TicTacToe
     end
 
     def row_win?
-      return true if cells_equality_check?([:a1, :a2, :a3])
-      return true if cells_equality_check?([:b1, :b2, :b3])
-      return true if cells_equality_check?([:c1, :c2, :c3])
+      cells_equality?([:a1, :a2, :a3]) || cells_equality?([:b1, :b2, :b3]) || cells_equality?([:c1, :c2, :c3])
     end
 
     def column_win?
-      return true if cells_equality_check?([:a1, :b1, :c1])
-      return true if cells_equality_check?([:a2, :b2, :c2])
-      return true if cells_equality_check?([:a3, :b3, :c3])
+      cells_equality?([:a1, :b1, :c1]) || cells_equality?([:a2, :b2, :c2]) || cells_equality?([:a3, :b3, :c3])
     end
 
     def diagonal_win?
-      return true if cells_equality_check?([:a3, :b2, :c1])
-      return true if cells_equality_check?([:a1, :b2, :c3])
+      cells_equality?([:a3, :b2, :c1]) || cells_equality?([:a1, :b2, :c3])
     end
 
-    def cells_equality_check?(cells_array)
+    def cells_equality?(cells_array)
       !cells[cells_array[0]].empty? && all_equal?(cells_array)
     end
 
