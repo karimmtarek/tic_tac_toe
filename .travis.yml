@@ -1,4 +1,6 @@
 language: ruby
-sudo: required
 rvm:
   - 2.2.0
+addons:
+  code_climate:
+    repo_token: 36997879b590f61d5f36f6b788df75529f716a9741198d5d7f46b628a7c1adfa

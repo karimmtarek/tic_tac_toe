@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["karimmtarek@gmail.com"]
   spec.summary       = %q{Human vs. AI Tic Tac Toe Game}
   spec.description   = %q{Human vs. AI Tic Tac Toe Game}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/karimmtarek/tic_tac_toe"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
@@ -21,5 +21,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", "~> 1.7"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec"
+  spec.add_development_dependency "codeclimate-test-reporter"
 end
 
