@@ -120,7 +120,7 @@ module TicTacToe
         board.cells[:a2] = 'X'
         board.cells[:a3] = 'X'
 
-        expect(board.cells_equality_check?([:a1, :a2, :a3])).to be_truthy
+        expect(board.cells_equality?([:a1, :a2, :a3])).to be_truthy
       end
 
       it 'returns false if three cells not equal each other' do
@@ -129,7 +129,7 @@ module TicTacToe
         board.cells[:a2] = 'X'
         board.cells[:a3] = 'O'
 
-        expect(board.cells_equality_check?([:a1, :a2, :a3])).to be_falsey
+        expect(board.cells_equality?([:a1, :a2, :a3])).to be_falsey
       end
     end
 
