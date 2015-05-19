@@ -1,4 +1,4 @@
-# TicTacToe
+# TicTacToe [![Code Climate](https://codeclimate.com/github/karimmtarek/tic_tac_toe/badges/gpa.svg)](https://codeclimate.com/github/karimmtarek/tic_tac_toe)
 
 Human vs. AI Tic Tac Toe Game.
 
