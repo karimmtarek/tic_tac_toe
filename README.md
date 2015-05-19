@@ -1,4 +1,4 @@
-# TicTacToe [![Code Climate](https://codeclimate.com/github/karimmtarek/tic_tac_toe/badges/gpa.svg)](https://codeclimate.com/github/karimmtarek/tic_tac_toe)
+# TicTacToe [![Build Status](https://travis-ci.org/karimmtarek/tic_tac_toe.svg?branch=master)](https://travis-ci.org/karimmtarek/tic_tac_toe) [![Code Climate](https://codeclimate.com/github/karimmtarek/tic_tac_toe/badges/gpa.svg)](https://codeclimate.com/github/karimmtarek/tic_tac_toe)
 
 Human vs. AI Tic Tac Toe Game.
 
