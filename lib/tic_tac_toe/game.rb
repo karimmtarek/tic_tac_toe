@@ -64,22 +64,17 @@ module TicTacToe
 
     # looking for a win move
     def win_move
-      board.available_cells.each do |cell|
-        board_cells[cell] = players.current
-        if board.win?
-          board_cells[cell] = players.current
-          moves_log << "#{players.current} > #{cell}"
-          break
-        else
-          board_cells[cell] = ''
-        end
-      end
+      check_each_cell(players.current)
     end
 
     # block human win
     def win_block
+      check_each_cell(players.switch)
+    end
+
+    def check_each_cell(player)
       board.available_cells.each do |cell|
-        board_cells[cell] = players.switch
+        board_cells[cell] = player
         if board.win?
           board_cells[cell] = players.current
           moves_log << "#{players.current} > #{cell}"
