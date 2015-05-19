@@ -44,7 +44,7 @@ module TicTacToe
       puts "\nWhat is your move?(type 'exit' to end the game)"
       cell = gets.chomp.downcase.to_sym
 
-      exit if cell == 'exit'
+      exit if cell == :exit
 
       if board.valid_full_cell?(cell)
         board_cells[:"#{cell}"] = players.current
