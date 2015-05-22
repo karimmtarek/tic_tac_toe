@@ -6,7 +6,7 @@ Human vs. AI Tic Tac Toe Game.
 - Clone this repo
 - Change directory to repo root directory
 - Run `$ bundle` to install missing dependencies
-- Run `$ ruby -Ilib -e "require 'tic_tac_toe'; TicTacToe.run"`
+- Run `$ ruby -Ilib bin/tictactoe`
 
 ## Installation (as a gem)
 
