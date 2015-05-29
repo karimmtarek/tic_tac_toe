@@ -14,6 +14,7 @@ module TicTacToe
 
     def run
       players.toss
+      # Smell - duplication? #1
       until board.game_over?
         board.render
         make_move
@@ -21,15 +22,21 @@ module TicTacToe
     end
 
     def make_move
-      if players.signs[:human] == players.current
+      # current_player.move - make this happen (homework)
+      if human_player?
         human_move
       else
         computer_move
       end
 
+      # Smell - duplication? #1
       return unless board.game_over?
       board.render
       render_final_status
+    end
+
+    def human_player?
+      players.signs[:human] == players.current
     end
 
     def render_final_status
