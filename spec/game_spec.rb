@@ -66,5 +66,14 @@ module TicTacToe
       end
     end
 
+    context '#assign_to_cell' do
+      it "computer makes wining move" do
+        game = Game.new
+
+        game.assign_to_cell(game.players.current, :a1)
+
+        expect(game.board.cells[:a1]).to eq('X')
+      end
+    end
   end
 end
