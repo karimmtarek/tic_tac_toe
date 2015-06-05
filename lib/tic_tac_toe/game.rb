@@ -3,13 +3,11 @@ require_relative 'player'
 
 module TicTacToe
   class Game
-    attr_reader :board, :board_cells, :moves_log, :players
+    attr_reader :board, :players
 
     def initialize
       @board = Board.new
-      @board_cells = @board.cells
       @players = Player.new
-      @moves_log = @players.moves
     end
 
     def run
@@ -49,24 +47,39 @@ module TicTacToe
 
     def human_move
       puts "\nWhat is your move?(type 'exit' to end the game)"
-      cell = gets.chomp.downcase.to_sym
+      cell = get_input
 
       exit if cell == :exit
 
-      if board.valid_full_cell?(cell)
-        board_cells[:"#{cell}"] = players.current
-        moves_log << "#{players.current} > #{cell}"
+      if mark_cell(cell, players.current)
+        register_cell(cell, players.current)
       else
-        puts "Invalid entry please try again\n"
+        notify_invalid_cell
       end
     end
 
+    def get_input
+      gets.chomp.downcase.to_sym
+    end
+
+    def mark_cell(cell, player)
+      board.mark_cell(cell, player)
+    end
+
+    def register_cell(cell, player)
+      players.moves << "#{player} > #{cell}"
+    end
+
+    def notify_invalid_cell
+      puts "Invalid entry please try again\n"
+    end
+
     def computer_move
-      flag = moves_log.length
+      flag = players.moves.length
 
       win_move
-      win_block if flag == moves_log.length
-      filler_move if flag == moves_log.length
+      win_block if flag == players.moves.length
+      filler_move if flag == players.moves.length
     end
 
     # looking for a win move
@@ -79,15 +92,19 @@ module TicTacToe
       check_each_cell(players.switch)
     end
 
+    def assign_to_cell(player, cell)
+      board.cells[cell] = player
+    end
+
     def check_each_cell(player)
       board.available_cells.each do |cell|
-        board_cells[cell] = player
+        assign_to_cell(player, cell)
         if board.win?
-          board_cells[cell] = players.current
-          moves_log << "#{players.current} > #{cell}"
+          assign_to_cell(players.current, cell)
+          players.moves << "#{players.current} > #{cell}"
           break
         else
-          board_cells[cell] = ''
+          assign_to_cell('', cell)
         end
       end
     end
@@ -96,8 +113,8 @@ module TicTacToe
     def filler_move
       ava_cells = board.available_cells
       cell = ava_cells[rand(0..ava_cells.length - 1)]
-      board_cells[cell] = players.current
-      moves_log << "#{players.current} > #{cell}"
+      assign_to_cell(players.current, cell)
+      players.moves << "#{players.current} > #{cell}"
     end
   end
 end

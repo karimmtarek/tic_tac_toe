@@ -48,6 +48,15 @@ module TicTacToe
       valid_cell?(cell) && empty_cell?(cell)
     end
 
+    def mark_cell(cell, player)
+      if valid_full_cell?(cell)
+        do_mark_cell(cell, player)
+        true
+      else
+        false
+      end
+    end
+
     def corner?(cell)
       [:a1, :a3, :c1, :c3].include? cell
     end
@@ -58,6 +67,10 @@ module TicTacToe
 
     def diagonal?(cell)
       cell == :b2
+    end
+
+    def do_mark_cell(cell, player)
+      cells[:"#{cell}"] = player
     end
 
     def win?
