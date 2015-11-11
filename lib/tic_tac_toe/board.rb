@@ -44,17 +44,21 @@ module TicTacToe
       cells[:"#{cell}"].empty?
     end
 
-    def valid_full_cell?(cell)
+    def valid_empty_cell?(cell)
       valid_cell?(cell) && empty_cell?(cell)
     end
 
     def mark_cell(cell, player)
-      if valid_full_cell?(cell)
+      if valid_empty_cell?(cell)
         do_mark_cell(cell, player)
         true
       else
         false
       end
+    end
+
+    def do_mark_cell(cell, player)
+      cells[cell.to_sym] = player
     end
 
     def corner?(cell)
@@ -69,8 +73,11 @@ module TicTacToe
       cell == :b2
     end
 
-    def do_mark_cell(cell, player)
-      cells[:"#{cell}"] = player
+
+    def move_to_available_cell(player)
+      available_cell = available_cells.sample
+      do_mark_cell(available_cell, player)
+      available_cell
     end
 
     def win?
@@ -110,6 +117,19 @@ module TicTacToe
 
     def game_over?
       win? || draw?
+    end
+
+    def find_winning_cell(player)
+      available_cells.each do |cell|
+        do_mark_cell(player, cell)
+        if win?
+          do_mark_cell('', cell)
+          yield cell
+          break
+        else
+          do_mark_cell('', cell)
+        end
+      end
     end
   end
 end

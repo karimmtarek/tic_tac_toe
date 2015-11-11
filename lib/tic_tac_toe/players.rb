@@ -1,5 +1,5 @@
 module TicTacToe
-  class Player
+  class Players
     attr_reader :signs, :moves
 
     def initialize
@@ -14,16 +14,6 @@ module TicTacToe
       else
         signs[:computer] = 'X'
         signs[:human] = 'O'
-      end
-    end
-
-    def print
-      return if signs[:human].empty?
-
-      if signs[:human] == 'X'
-        "Human(#{signs[:human]}) vs. Computer(#{signs[:computer]})"
-      else
-        "Computer(#{signs[:computer]}) vs. Human(#{signs[:human]})"
       end
     end
 
